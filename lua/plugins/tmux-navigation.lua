@@ -1,4 +1,4 @@
-return { -- Tmux navigation
+return {
   'christoomey/vim-tmux-navigator',
   cmd = {
     'TmuxNavigateLeft',
