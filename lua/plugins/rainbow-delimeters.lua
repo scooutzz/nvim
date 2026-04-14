@@ -9,6 +9,10 @@ return {
       query = {
         [''] = 'rainbow-delimiters',
         lua = 'rainbow-blocks',
+        html = 'rainbow-blocks',
+        tsx = 'rainbow-blocks',
+        jsx = 'rainbow-blocks',
+        vue = 'rainbow-blocks',
       },
       priority = {
         [''] = 110,

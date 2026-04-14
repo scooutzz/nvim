@@ -42,7 +42,13 @@ return {
         },
         disabled_ft = {},
       }
+
+      -- Disable default vim diagnostics
       vim.diagnostic.config { virtual_text = false }
+
+      -- Keymaps
+      vim.keymap.set('n', '<leader>td', '<cmd>TinyInlineDiag toggle<CR>', { desc = 'Toggle Tiny Inline Diagnostic' })
+      local a
     end,
   },
 
