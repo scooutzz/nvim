@@ -18,7 +18,7 @@ end
 local rtp = vim.opt.rtp
 rtp:prepend(lazypath)
 
-require('lazy').setup({
+require('lazy').setup {
   spec = {
     { import = 'plugins' },
   },
@@ -39,4 +39,4 @@ require('lazy').setup({
       lazy = '💤 ',
     },
   },
-})
+}

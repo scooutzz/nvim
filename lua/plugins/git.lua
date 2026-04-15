@@ -1,5 +1,23 @@
 return {
   {
+    'mbbill/undotree',
+    config = function()
+      vim.keymap.set('n', '<leader>u', vim.cmd.UndotreeToggle, { desc = 'Toggle [u]ndotree' })
+    end,
+  },
+
+  {
+    'tpope/vim-fugitive',
+    config = function()
+      vim.keymap.set('n', '<leader>gs', vim.cmd.Git, { desc = '[G]it [s]tatus' })
+      vim.keymap.set('n', '<leader>grc', ':Gvdiffsplit!<CR>', { desc = '[G]it [r]esolve [c]onflicts' })
+      vim.keymap.set({ 'n', 'v' }, '<leader>grh', ':diffget //2<CR>', { desc = '[G]it [r]esolve target [h]' })
+      vim.keymap.set({ 'n', 'v' }, '<leader>grl', ':diffget //3<CR>', { desc = '[G]it [r]esolve merge [l]' })
+      vim.keymap.set('n', '<leader>grw', ':Gwrite<CR>', { desc = '[G]it [r]esolve [q]uit' })
+    end,
+  },
+
+  {
     'lewis6991/gitsigns.nvim',
     opts = {
       current_line_blame = true,
@@ -54,9 +72,28 @@ return {
         map('n', '<leader>hp', gitsigns.preview_hunk, { desc = 'git [p]review hunk' })
         map('n', '<leader>hb', gitsigns.blame_line, { desc = 'git [b]lame line' })
         map('n', '<leader>hd', gitsigns.diffthis, { desc = 'git [d]iff against index' })
+
         map('n', '<leader>hD', function()
           gitsigns.diffthis '@'
         end, { desc = 'git [D]iff against last commit' })
+
+        map('n', '<leader>hc', function()
+          local blame = vim.b.gitsigns_blame_line_dict
+          if blame and blame.sha then
+            gitsigns.diffthis(blame.sha .. '^')
+          else
+            vim.notify('No blame information available for this line', vim.log.levels.WARN)
+          end
+        end, { desc = 'git [c]ommit parent diff' })
+
+        map('n', '<leader>hC', function()
+          local blame = vim.b.gitsigns_blame_line_dict
+          if blame and blame.sha then
+            gitsigns.diffthis(blame.sha)
+          else
+            vim.notify('No blame information available for this line', vim.log.levels.WARN)
+          end
+        end, { desc = 'git [C]ommit diff' })
 
         -- Toggles
         map('n', '<leader>tb', gitsigns.toggle_current_line_blame, { desc = '[T]oggle git show [b]lame line' })
@@ -64,23 +101,4 @@ return {
       end,
     },
   },
-
-  {
-    'tpope/vim-fugitive',
-    config = function()
-      vim.keymap.set('n', '<leader>gs', vim.cmd.Git, { desc = '[G]it [s]tatus' })
-      vim.keymap.set('n', '<leader>grc', ':Gvdiffsplit!<CR>', { desc = '[G]it [r]esolve [c]onflicts' })
-      vim.keymap.set({ 'n', 'v' }, '<leader>grh', ':diffget //2<CR>', { desc = '[G]it [r]esolve target [h]' })
-      vim.keymap.set({ 'n', 'v' }, '<leader>grl', ':diffget //3<CR>', { desc = '[G]it [r]esolve merge [l]' })
-      vim.keymap.set('n', '<leader>grw', ':Gwrite<CR>', { desc = '[G]it [r]esolve [q]uit' })
-    end,
-  },
-
-  {
-    'mbbill/undotree',
-    config = function()
-      vim.keymap.set('n', '<leader>u', vim.cmd.UndotreeToggle, { desc = 'Toggle [u]ndotree' })
-    end,
-  },
 }
-
