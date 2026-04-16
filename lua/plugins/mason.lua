@@ -12,15 +12,15 @@ return {
     'WhoIsSethDaniel/mason-tool-installer.nvim',
     opts = {},
   },
-  -- {
-  --   'j-hui/fidget.nvim',
-  --   opts = {
-  --     notification = {
-  --       window = {
-  --         winblend = 0,
-  --         border = 'rounded',
-  --       },
-  --     },
-  --   },
-  -- },
+  {
+    'j-hui/fidget.nvim',
+    opts = {
+      notification = {
+        window = {
+          winblend = 0,
+          border = 'rounded',
+        },
+      },
+    },
+  },
 }

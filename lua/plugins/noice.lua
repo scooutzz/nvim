@@ -1,5 +1,5 @@
 return {
-  'folke/noice.nvim',
+  --[['folke/noice.nvim'],
   event = 'VeryLazy',
   opts = {
     presets = {
@@ -79,5 +79,6 @@ return {
       max_width = 50,
     }
     require('noice').setup(opts)
-  end,
+  end,]]
+  --
 }
