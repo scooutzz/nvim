@@ -89,6 +89,10 @@ return {
           filetypes = { 'html', 'css', 'scss', 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
         },
 
+        bashls = {
+          filetypes = { 'sh', 'bash', 'zsh' },
+        },
+
         lua_ls = {
           settings = {
             Lua = {
@@ -245,4 +249,3 @@ return {
     },
   },
 }
-

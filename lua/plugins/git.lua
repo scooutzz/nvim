@@ -17,8 +17,29 @@ return {
     end,
   },
 
+  { -- Diff view
+    'sindrets/diffview.nvim',
+    config = function()
+      local actions = require 'diffview.actions'
+
+      require('diffview').setup {
+        view = {
+          merge_tool = {
+            layout = 'diff3_mixed',
+            disable_diagnostics = true,
+            winbar_info = true,
+          },
+        },
+      }
+
+      vim.keymap.set('n', '<leader>gd', '<cmd>DiffviewOpen<CR>', { desc = '[G]it [d]iff' })
+      vim.keymap.set('n', '<leader>gx', '<cmd>DiffviewClose<CR>', { desc = '[G]it diff close[x]' })
+    end,
+  },
+
   {
     'lewis6991/gitsigns.nvim',
+    dependencies = { 'sindrets/diffview.nvim' },
     opts = {
       current_line_blame = true,
       signs = {
@@ -77,23 +98,14 @@ return {
           gitsigns.diffthis '@'
         end, { desc = 'git [D]iff against last commit' })
 
-        map('n', '<leader>hc', function()
+        map('n', '<leader>gD', function()
           local blame = vim.b.gitsigns_blame_line_dict
           if blame and blame.sha then
-            gitsigns.diffthis(blame.sha .. '^')
+            vim.cmd('DiffviewOpen ' .. blame.sha .. '^!')
           else
             vim.notify('No blame information available for this line', vim.log.levels.WARN)
           end
-        end, { desc = 'git [c]ommit parent diff' })
-
-        map('n', '<leader>hC', function()
-          local blame = vim.b.gitsigns_blame_line_dict
-          if blame and blame.sha then
-            gitsigns.diffthis(blame.sha)
-          else
-            vim.notify('No blame information available for this line', vim.log.levels.WARN)
-          end
-        end, { desc = 'git [C]ommit diff' })
+        end, { desc = '[G]it show [c]ommit changes' })
 
         -- Toggles
         map('n', '<leader>tb', gitsigns.toggle_current_line_blame, { desc = '[T]oggle git show [b]lame line' })

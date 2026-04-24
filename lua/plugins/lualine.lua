@@ -13,7 +13,13 @@ return {
         lualine_a = { 'mode' },
         lualine_b = { 'branch', 'diff', 'diagnostics' },
         lualine_c = { 'filename' },
-        lualine_x = { 'searchcount', 'filetype' },
+        lualine_x = {
+          'searchcount',
+          'filetype',
+          function()
+            return ''
+          end,
+        },
         lualine_y = { 'progress' },
         lualine_z = { 'location' },
       },
