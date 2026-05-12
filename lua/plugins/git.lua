@@ -10,30 +10,30 @@ return {
     'tpope/vim-fugitive',
     config = function()
       vim.keymap.set('n', '<leader>gs', vim.cmd.Git, { desc = '[G]it [s]tatus' })
-      vim.keymap.set('n', '<leader>grc', ':Gvdiffsplit!<CR>', { desc = '[G]it [r]esolve [c]onflicts' })
-      vim.keymap.set({ 'n', 'v' }, '<leader>grh', ':diffget //2<CR>', { desc = '[G]it [r]esolve target [h]' })
-      vim.keymap.set({ 'n', 'v' }, '<leader>grl', ':diffget //3<CR>', { desc = '[G]it [r]esolve merge [l]' })
-      vim.keymap.set('n', '<leader>grw', ':Gwrite<CR>', { desc = '[G]it [r]esolve [q]uit' })
-    end,
-  },
+      vim.keymap.set('n', '<leader>gd', vim.cmd.Gdiffsplit, { desc = '[G]it [d]iff' })
+      -- Merge Conflicts
+      vim.keymap.set('n', '<leader>gc', ':Gvdiffsplit!<CR>', { desc = '[G]it resolve [c]onflicts' })
+      vim.keymap.set('n', '<leader>gf', ':diffget //2<CR>', { desc = '[G]it resolve target (left) [f]' })
+      vim.keymap.set('n', '<leader>gj', ':diffget //3<CR>', { desc = '[G]it resolve merge (right) [j]' })
+      vim.keymap.set('n', '<leader>gw', ':Gwrite<CR>', { desc = '[G]it [w]rite' })
 
-  { -- Diff view
-    'sindrets/diffview.nvim',
-    config = function()
-      local actions = require 'diffview.actions'
+      local My_Fugitive = vim.api.nvim_create_augroup('My_Fugitive', {})
 
-      require('diffview').setup {
-        view = {
-          merge_tool = {
-            layout = 'diff3_mixed',
-            disable_diagnostics = true,
-            winbar_info = true,
-          },
-        },
-      }
+      local autocmd = vim.api.nvim_create_autocmd
+      autocmd('BufWinEnter', {
+        group = My_Fugitive,
+        pattern = '*',
+        callback = function()
+          if vim.bo.ft ~= 'fugitive' then
+            return
+          end
 
-      vim.keymap.set('n', '<leader>gd', '<cmd>DiffviewOpen<CR>', { desc = '[G]it [d]iff' })
-      vim.keymap.set('n', '<leader>gx', '<cmd>DiffviewClose<CR>', { desc = '[G]it diff close[x]' })
+          local bufnr = vim.api.nvim_get_current_buf()
+          vim.keymap.set('n', 'p', function()
+            vim.cmd.Git { 'pull --rebase' }
+          end, { buffer = bufnr, remap = false, desc = 'Git pull' })
+        end,
+      })
     end,
   },
 
