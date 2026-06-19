@@ -9,8 +9,18 @@ return {
   {
     'tpope/vim-fugitive',
     config = function()
-      vim.keymap.set('n', '<leader>gs', vim.cmd.Git, { desc = '[G]it [s]tatus' })
-      vim.keymap.set('n', '<leader>gd', vim.cmd.Gdiffsplit, { desc = '[G]it [d]iff' })
+      -- vim.keymap.set('n', '<leader>gs', vim.cmd.Git, { desc = '[G]it [s]tatus' })
+      vim.keymap.set('n', '<leader>gs', '<cmd>tabnew | Git | only<CR>', { desc = '[G]it [s]tatus' })
+      vim.keymap.set('n', '<leader>gd', vim.cmd.Gvdiffsplit, { desc = '[G]it [d]iff' })
+      vim.keymap.set('n', '<leader>gD', function()
+        local blame = vim.b.gitsigns_blame_line_dict
+        if blame and blame.sha then
+          vim.cmd('G show ' .. blame.sha .. ' -- %')
+        else
+          vim.notify('No blame information available for this line', vim.log.levels.WARN)
+        end
+      end, { desc = '[G]it show [c]ommit changes (Current File)' })
+
       -- Merge Conflicts
       vim.keymap.set('n', '<leader>gc', ':Gvdiffsplit!<CR>', { desc = '[G]it resolve [c]onflicts' })
       vim.keymap.set('n', '<leader>gf', ':diffget //2<CR>', { desc = '[G]it resolve target (left) [f]' })
@@ -39,7 +49,6 @@ return {
 
   {
     'lewis6991/gitsigns.nvim',
-    dependencies = { 'sindrets/diffview.nvim' },
     opts = {
       current_line_blame = true,
       signs = {
@@ -97,15 +106,6 @@ return {
         map('n', '<leader>hD', function()
           gitsigns.diffthis '@'
         end, { desc = 'git [D]iff against last commit' })
-
-        map('n', '<leader>gD', function()
-          local blame = vim.b.gitsigns_blame_line_dict
-          if blame and blame.sha then
-            vim.cmd('DiffviewOpen ' .. blame.sha .. '^!')
-          else
-            vim.notify('No blame information available for this line', vim.log.levels.WARN)
-          end
-        end, { desc = '[G]it show [c]ommit changes' })
 
         -- Toggles
         map('n', '<leader>tb', gitsigns.toggle_current_line_blame, { desc = '[T]oggle git show [b]lame line' })

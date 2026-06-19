@@ -93,6 +93,13 @@ return {
           filetypes = { 'sh', 'bash', 'zsh' },
         },
 
+        qmlls = {
+          -- cmd = { 'qmlls', '-E' },
+          cmd = { 'qmlls' },
+          filetypes = { 'qml' },
+          single_file_support = true,
+        },
+
         lua_ls = {
           settings = {
             Lua = {
