@@ -3,12 +3,14 @@ return {
   dependencies = { 'nvim-tree/nvim-web-devicons' },
   config = function()
     local function show_macro_recording()
-      local recording_register = vim.fn.reg_recording()
-      if recording_register == '' then
-        return ''
-      else
-        return 'recording @' .. recording_register
-      end
+      return ''
+
+      -- local recording_register = vim.fn.reg_recording()
+      -- if recording_register == '' then
+      --   return ''
+      -- else
+      --   return 'recording @' .. recording_register
+      -- end
     end
 
     require('lualine').setup {

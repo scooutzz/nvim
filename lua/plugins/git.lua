@@ -23,8 +23,8 @@ return {
 
       -- Merge Conflicts
       vim.keymap.set('n', '<leader>gc', ':Gvdiffsplit!<CR>', { desc = '[G]it resolve [c]onflicts' })
-      vim.keymap.set('n', '<leader>gf', ':diffget //2<CR>', { desc = '[G]it resolve target (left) [f]' })
-      vim.keymap.set('n', '<leader>gj', ':diffget //3<CR>', { desc = '[G]it resolve merge (right) [j]' })
+      vim.keymap.set({ 'n', 'v' }, '<leader>gh', ':diffget //2<CR>', { desc = '[G]it resolve target [h]left' })
+      vim.keymap.set({ 'n', 'v' }, '<leader>gl', ':diffget //3<CR>', { desc = '[G]it resolve merge [l]right' })
       vim.keymap.set('n', '<leader>gw', ':Gwrite<CR>', { desc = '[G]it [w]rite' })
 
       local My_Fugitive = vim.api.nvim_create_augroup('My_Fugitive', {})
