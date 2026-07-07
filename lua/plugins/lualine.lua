@@ -4,7 +4,6 @@ return {
   config = function()
     local function show_macro_recording()
       return ''
-
       -- local recording_register = vim.fn.reg_recording()
       -- if recording_register == '' then
       --   return ''

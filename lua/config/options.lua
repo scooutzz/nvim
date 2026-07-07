@@ -1,14 +1,11 @@
-local set = vim.opt
-
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
 vim.g.have_nerd_font = true
+local set = vim.opt
 
 set.termguicolors = true
 set.number = true
 set.relativenumber = true
 set.signcolumn = 'yes'
-set.colorcolumn = '0'
+set.colorcolumn = '100'
 set.cursorline = true
 set.guicursor = ''
 set.showcmdloc = 'statusline'
@@ -17,10 +14,9 @@ set.laststatus = 3
 
 set.scrolloff = 8
 set.mouse = 'a'
-set.wrap = true
+set.wrap = false
 set.splitright = true
 set.splitbelow = true
-set.colorcolumn = '100'
 
 set.tabstop = 2
 set.softtabstop = 2

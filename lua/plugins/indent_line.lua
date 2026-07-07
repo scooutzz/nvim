@@ -1,4 +1,5 @@
 return {
+  --[[
   {
     'lukas-reineke/indent-blankline.nvim',
     main = 'ibl',
@@ -82,4 +83,6 @@ return {
       hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
     end,
   },
+  ]]
+  --
 }
