@@ -2,15 +2,14 @@ return {
   'nvim-lualine/lualine.nvim',
   dependencies = { 'nvim-tree/nvim-web-devicons' },
   config = function()
-    local function show_macro_recording()
-      return ''
-      -- local recording_register = vim.fn.reg_recording()
-      -- if recording_register == '' then
-      --   return ''
-      -- else
-      --   return 'recording @' .. recording_register
-      -- end
-    end
+    -- local function show_macro_recording()
+    --   local recording_register = vim.fn.reg_recording()
+    --   if recording_register == '' then
+    --     return ''
+    --   else
+    --     return 'recording @' .. recording_register
+    --   end
+    -- end
 
     require('lualine').setup {
       options = {
@@ -21,28 +20,12 @@ return {
       },
       sections = {
         lualine_a = { 'mode' },
-        lualine_b = { 'branch', 'diff', 'diagnostics' },
-        lualine_c = {
-          'filename',
-          {
-            show_macro_recording,
-            color = { fg = require('lualine.utils.utils').extract_highlight_colors('Comment', 'fg') },
-          },
-        },
-        lualine_x = {
-          {
-            function()
-              return '%S'
-            end,
-          },
-          'searchcount',
-          'filetype',
-          function()
-            return ''
-          end,
-        },
-        lualine_y = { 'progress' },
-        lualine_z = { 'location' },
+        lualine_b = { 'branch', 'diff' },
+        lualine_c = { { 'filename', path = 1 } },
+
+        lualine_x = { 'diagnostics' },
+        lualine_y = { 'filetype' },
+        lualine_z = { 'location', 'progress' },
       },
     }
   end,
