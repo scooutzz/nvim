@@ -39,10 +39,13 @@ return {
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
 
+      vim.keymap.set('n', '<leader>sG', function()
+        builtin.grep_string { search = vim.fn.input 'Grep > ' }
+      end, { desc = '[S]earch [G]rep for word' })
+
       vim.keymap.set('n', '<C-p>', function()
         builtin.find_files {
           find_command = { 'rg', '--files', '--hidden', '--glob', '!.git/' },
-          previewr = false,
         }
       end)
 
@@ -66,4 +69,3 @@ return {
     end,
   },
 }
-
