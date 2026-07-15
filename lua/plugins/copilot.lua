@@ -1,3 +1,5 @@
+return {}
+--[[
 return {
   'zbirenbaum/copilot.lua',
   event = 'InsertEnter',
@@ -16,3 +18,5 @@ return {
     }
   end,
 }
+]]
+--
