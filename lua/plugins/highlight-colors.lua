@@ -7,7 +7,7 @@ return {
       virtual_symbol = '',
       virtual_symbol_prefix = '',
       virtual_symbol_suffix = ' ',
-      virtual_symnbol_position = 'inline',
+      virtual_symbol_position = 'inline',
       enable_hex = true,
       enable_short_hex = true,
       enable_rgb = true,
