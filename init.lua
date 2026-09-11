@@ -16,6 +16,9 @@ require 'config.options'
 require 'config.autocmds'
 require 'config.keymaps'
 
+-- Prepare Omarchy's generated theme spec before lazy.nvim scans lua/plugins.
+require 'config.omarchy'
+
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
@@ -31,6 +34,10 @@ rtp:prepend(lazypath)
 require('lazy').setup {
   spec = {
     { import = 'plugins' },
+  },
+  change_detection = {
+    enabled = true,
+    notify = false,
   },
   ui = {
     icons = vim.g.have_nerd_font and {} or {

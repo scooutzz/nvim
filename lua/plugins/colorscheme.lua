@@ -16,6 +16,50 @@ end
 
 local initial_theme = get_current_theme()
 
+local config_theme = {
+  'config-theme',
+  virtual = true,
+  lazy = false,
+  priority = 1001,
+  config = function()
+    vim.api.nvim_create_autocmd('ColorScheme', {
+      pattern = '*',
+      callback = function()
+        vim.api.nvim_set_hl(0, 'Normal', { bg = 'none' })
+        vim.api.nvim_set_hl(0, 'NormalNC', { bg = 'none' })
+
+        vim.api.nvim_set_hl(0, 'SignColumn', { bg = 'none' })
+        vim.api.nvim_set_hl(0, 'EndOfBuffer', { bg = 'none' })
+      end,
+    })
+
+    if require('config.omarchy').enabled then
+      return
+    end
+
+    local themes = {
+      ['tokyo-night'] = 'tokyonight-night',
+      ['rose-pine'] = 'rose-pine',
+      ['catppuccin-mocha'] = 'catppuccin-mocha',
+      ['gruvbox'] = 'gruvbox-material',
+      ['gruvbox-material'] = 'gruvbox-material',
+      ['everforest'] = 'everforest',
+      ['nord'] = 'nord',
+    }
+
+    local final_theme = themes[initial_theme] or initial_theme
+
+    local ok = pcall(vim.cmd.colorscheme, final_theme)
+    if not ok then
+      vim.cmd.colorscheme 'rose-pine'
+    end
+  end,
+}
+
+if require('config.omarchy').enabled then
+  return { config_theme }
+end
+
 return {
   { 'folke/tokyonight.nvim', lazy = false, priority = 1000 },
   { 'rose-pine/neovim', name = 'rose-pine', lazy = false, priority = 1000 },
@@ -50,38 +94,5 @@ return {
   { 'sainnhe/everforest', lazy = false, priority = 1000 },
   { 'shaunsingh/nord.nvim', lazy = false, priority = 1000 },
 
-  {
-    'config-theme',
-    virtual = true,
-    lazy = false,
-    config = function()
-      vim.api.nvim_create_autocmd('ColorScheme', {
-        pattern = '*',
-        callback = function()
-          vim.api.nvim_set_hl(0, 'Normal', { bg = 'none' })
-          vim.api.nvim_set_hl(0, 'NormalNC', { bg = 'none' })
-
-          vim.api.nvim_set_hl(0, 'SignColumn', { bg = 'none' })
-          vim.api.nvim_set_hl(0, 'EndOfBuffer', { bg = 'none' })
-        end,
-      })
-
-      local themes = {
-        ['tokyo-night'] = 'tokyonight-night',
-        ['rose-pine'] = 'rose-pine',
-        ['catppuccin-mocha'] = 'catppuccin-mocha',
-        ['gruvbox'] = 'gruvbox-material',
-        ['gruvbox-material'] = 'gruvbox-material',
-        ['everforest'] = 'everforest',
-        ['nord'] = 'nord',
-      }
-
-      local final_theme = themes[initial_theme] or initial_theme
-
-      local ok, err = pcall(vim.cmd.colorscheme, final_theme)
-      if not ok then
-        vim.cmd.colorscheme 'rose-pine'
-      end
-    end,
-  },
+  config_theme,
 }
