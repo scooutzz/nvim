@@ -5,15 +5,15 @@ vim.g.have_nerd_font = true
 require('vim._core.ui2').enable {
   enable = true,
   msg = {
-    target = 'cmd',
+    targets = 'cmd',
     pager = { height = 1 },
-    msg = { height = 0.5, timout = 4500 },
+    msg = { height = 0.5, timeout = 4500 },
     dialog = { height = 0.5 },
     cmd = { height = 0.5 },
   },
 }
 require 'config.options'
-require 'autocmds'
+require 'config.autocmds'
 require 'config.keymaps'
 
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'

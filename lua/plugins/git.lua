@@ -9,8 +9,7 @@ return {
   {
     'tpope/vim-fugitive',
     config = function()
-      -- vim.keymap.set('n', '<leader>gs', vim.cmd.Git, { desc = '[G]it [s]tatus' })
-      vim.keymap.set('n', '<leader>gs', '<cmd>tabnew | Git | only<CR>', { desc = '[G]it [s]tatus' })
+      vim.keymap.set('n', '<leader>gs', vim.cmd.Git, { desc = '[G]it [s]tatus' })
       vim.keymap.set('n', '<leader>gd', vim.cmd.Gvdiffsplit, { desc = '[G]it [d]iff' })
       vim.keymap.set('n', '<leader>gD', function()
         local blame = vim.b.gitsigns_blame_line_dict

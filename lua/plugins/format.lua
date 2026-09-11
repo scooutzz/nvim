@@ -34,7 +34,6 @@ return {
         zsh = { 'shfmt' },
         c = { 'clang_format' },
         cpp = { 'clang-format' },
-        ['nil'] = { 'alejandra' },
       },
     },
   },
