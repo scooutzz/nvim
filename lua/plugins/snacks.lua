@@ -7,10 +7,12 @@ return {
   lazy = false,
   opts = {
     bigfile = { enabled = true },
-    dashboard = { enabled = true },
     picker = {
       enabled = true,
       ui_select = true,
+      layout = {
+        preset = 'telescope',
+      },
     },
     quickfile = { enabled = true },
     statuscolumn = { enabled = true },
@@ -138,20 +140,34 @@ return {
       desc = '[S]earch [N]eovim files',
     },
 
-    -- LazyGit
+    -- LSP
     {
-      '<leader>lg',
+      'gd',
       function()
-        Snacks.lazygit()
+        Snacks.picker.lsp_definitions()
       end,
-      desc = '[L]azy[G]it',
+      desc = 'Goto Definition',
     },
     {
-      '<leader>lf',
+      'gD',
       function()
-        Snacks.lazygit.log_file()
+        Snacks.picker.lsp_declarations()
       end,
-      desc = 'Lazygit [L]og [F]ile',
+      desc = 'Goto Declaration',
+    },
+    {
+      '<leader>ss',
+      function()
+        Snacks.picker.lsp_symbols()
+      end,
+      desc = 'LSP Symbols',
+    },
+    {
+      '<leader>sS',
+      function()
+        Snacks.picker.lsp_workspace_symbols()
+      end,
+      desc = 'LSP Workspace Symbols',
     },
 
     -- Explorer

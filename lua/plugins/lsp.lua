@@ -113,20 +113,9 @@ return {
       vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('UserLspConfig', { clear = true }),
         callback = function(event)
-          local picker = Snacks.picker
           local map = function(keys, func, desc, mode)
             vim.keymap.set(mode or 'n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
           end
-
-          -- Neovim 0.12 already defines grn, gra and the other basic LSP
-          -- mappings. Keep only the Snacks overrides and extra mappings.
-          map('grr', picker.lsp_references, '[G]oto [R]eferences')
-          map('gri', picker.lsp_implementations, '[G]oto [I]mplementations')
-          map('grd', picker.lsp_definitions, '[G]oto [D]efinitions')
-          map('grD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-          map('gO', picker.lsp_symbols, 'Open Document Symbols')
-          map('gW', picker.lsp_workspace_symbols, 'Open Workspace Symbols')
-          map('grt', picker.lsp_type_definitions, '[G]oto [T]ype Definition')
 
           local client = vim.lsp.get_client_by_id(event.data.client_id)
           if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint, event.buf) then

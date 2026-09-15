@@ -21,10 +21,10 @@ return {
       end, { desc = '[G]it show [c]ommit changes (Current File)' })
 
       -- Merge Conflicts
-      vim.keymap.set('n', '<leader>gc', ':Gvdiffsplit!<CR>', { desc = '[G]it resolve [c]onflicts' })
-      vim.keymap.set({ 'n', 'v' }, '<leader>gh', ':diffget //2<CR>', { desc = '[G]it resolve target [h]left' })
-      vim.keymap.set({ 'n', 'v' }, '<leader>gl', ':diffget //3<CR>', { desc = '[G]it resolve merge [l]right' })
-      vim.keymap.set('n', '<leader>gw', ':Gwrite<CR>', { desc = '[G]it [w]rite' })
+      vim.keymap.set('n', '<leader>grc', ':Gvdiffsplit!<CR>', { desc = '[G]it resolve [c]onflicts' })
+      vim.keymap.set({ 'n', 'v' }, '<leader>grh', ':diffget //2<CR>', { desc = '[G]it resolve target [h]left' })
+      vim.keymap.set({ 'n', 'v' }, '<leader>grl', ':diffget //3<CR>', { desc = '[G]it resolve merge [l]right' })
+      vim.keymap.set('n', '<leader>grw', ':Gwrite<CR>', { desc = '[G]it [w]rite' })
 
       local My_Fugitive = vim.api.nvim_create_augroup('My_Fugitive', {})
 
