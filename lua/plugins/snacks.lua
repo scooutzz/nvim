@@ -142,14 +142,14 @@ return {
 
     -- LSP
     {
-      'gd',
+      'grd',
       function()
         Snacks.picker.lsp_definitions()
       end,
       desc = 'Goto Definition',
     },
     {
-      'gD',
+      'grD',
       function()
         Snacks.picker.lsp_declarations()
       end,
@@ -174,7 +174,7 @@ return {
     {
       '\\',
       function()
-        Snacks.explorer()
+        Snacks.explorer { auto_close = true }
       end,
       desc = '[E]xplorer',
       mode = { 'n', 'x' },
