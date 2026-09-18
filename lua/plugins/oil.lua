@@ -9,7 +9,13 @@ return {
       skip_confirm_for_simple_edits = true,
       keymaps = {
         ['<C-p>'] = false,
+        ['<C-h>'] = false,
+        ['<C-s>'] = false,
+        ['<C-l>'] = false,
         ['gp'] = 'actions.preview',
+        ['gh'] = { 'actions.select', opts = { horizontal = true } },
+        ['gv'] = { 'actions.select', opts = { vertical = true } },
+        ['gr'] = 'actions.refresh',
       },
       win_options = {
         signcolumn = 'yes:2', -- required for oil-git-status
