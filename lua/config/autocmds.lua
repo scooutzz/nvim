@@ -25,15 +25,3 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.opt_local.formatoptions:remove { 'c', 'r', 'o' }
   end,
 })
-
-vim.api.nvim_create_autocmd('VimEnter', {
-  callback = function()
-    os.execute 'kitty @ set-spacing padding=5'
-  end,
-})
-
-vim.api.nvim_create_autocmd('VimLeavePre', {
-  callback = function()
-    os.execute 'kitty @ set-spacing padding=0'
-  end,
-})

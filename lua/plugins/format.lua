@@ -7,7 +7,6 @@ return {
       {
         '<leader>f',
         function()
-          -- require('conform').format { async = true, lsp_format = 'fallback' }
           require('conform').format { bufnr = 0 }
         end,
         mode = '',
@@ -17,7 +16,7 @@ return {
     opts = {
       notify_on_error = false,
       format_on_save = {
-        timeout_ms = 500,
+        timeout_ms = 5000,
         lsp_format = 'fallback',
         lsp_fallback = true,
       },
@@ -32,8 +31,19 @@ return {
         sh = { 'shfmt' },
         bash = { 'shfmt' },
         zsh = { 'shfmt' },
-        c = { 'clang_format' },
+        c = { 'clang-format' },
         cpp = { 'clang-format' },
+      },
+      formatters = {
+        ['clang-format'] = {
+          prepend_args = function(_, ctx)
+            local config = vim.fs.find({ '.clang-format', '_clang-format' }, { path = ctx.dirname, upward = true, type = 'file' })[1]
+            if config then
+              return {}
+            end
+            return { '--style={BasedOnStyle: LLVM, IndentWidth: 4, UseTab: Never, AllowShortFunctionsOnASingleLine: None}' }
+          end,
+        },
       },
     },
   },

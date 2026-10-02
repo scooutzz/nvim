@@ -1,6 +1,4 @@
 return {
-  { 'NMAC427/guess-indent.nvim' },
-
   {
     'folke/which-key.nvim',
     dependencies = {

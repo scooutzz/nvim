@@ -19,11 +19,8 @@ return {
       'saghen/blink.cmp',
     },
     config = function()
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities = require('blink.cmp').get_lsp_capabilities(capabilities)
-
       vim.lsp.config('*', {
-        capabilities = capabilities,
+        capabilities = require('blink.cmp').get_lsp_capabilities(nil, true),
       })
 
       local vue_language_server_path = vim.fn.stdpath 'data' .. '/mason/packages/vue-language-server/node_modules/@vue/language-server'
@@ -69,6 +66,12 @@ return {
         },
       })
 
+      vim.lsp.config('clangd', {
+        cmd = { 'clangd' },
+        filetypes = { 'c', 'cpp', 'objc', 'objcpp' },
+        root_markers = { 'compile_commands.json', '.clangd', 'configure.ac', 'Makefile', '.git' },
+      })
+
       local ensure_installed = {
         'bashls',
         'emmet_ls',
@@ -76,6 +79,7 @@ return {
         'qmlls',
         'vtsls',
         'vue_ls',
+        'clangd',
       }
 
       -- Mason owns installation; Neovim owns activation. Disabling Mason's
@@ -88,20 +92,17 @@ return {
       vim.lsp.enable(ensure_installed)
 
       vim.diagnostic.config {
+        virtual_text = true,
         severity_sort = true,
         signs = vim.g.have_nerd_font and {
           text = {
-            [vim.diagnostic.severity.ERROR] = '󰅚 ',
-            [vim.diagnostic.severity.WARN] = '󰀪 ',
-            [vim.diagnostic.severity.INFO] = '󰋽 ',
-            [vim.diagnostic.severity.HINT] = '󰌶 ',
+            [vim.diagnostic.severity.ERROR] = '✘',
+            [vim.diagnostic.severity.WARN] = '▲',
+            [vim.diagnostic.severity.HINT] = '⚑',
+            [vim.diagnostic.severity.INFO] = '»',
           },
         } or {},
-        virtual_text = false,
-        underline = { severity = vim.diagnostic.severity.ERROR },
-        update_in_insert = false,
         float = {
-          focusable = true,
           style = 'minimal',
           border = 'rounded',
           source = 'if_many',
@@ -110,19 +111,44 @@ return {
         },
       }
 
+      local orig = vim.lsp.util.open_floating_preview
+      ---@diagnostic disable-next-line: duplicate-set-field
+      function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
+        opts = opts or {}
+        opts.border = opts.border or 'rounded'
+        opts.max_width = opts.max_width or 80
+        opts.max_height = opts.max_height or 24
+        opts.wrap = opts.wrap ~= false
+        return orig(contents, syntax, opts, ...)
+      end
+
       vim.api.nvim_create_autocmd('LspAttach', {
-        group = vim.api.nvim_create_augroup('UserLspConfig', { clear = true }),
-        callback = function(event)
-          local map = function(keys, func, desc, mode)
-            vim.keymap.set(mode or 'n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
+        group = vim.api.nvim_create_augroup('my.lsp', {}),
+        callback = function(args)
+          local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
+          local buf = args.buf
+          local map = function(mode, lhs, rhs, desc)
+            vim.keymap.set(mode, lhs, rhs, { buffer = buf, desc = desc })
           end
 
-          local client = vim.lsp.get_client_by_id(event.data.client_id)
-          if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint, event.buf) then
-            map('<leader>th', function()
-              local enabled = vim.lsp.inlay_hint.is_enabled { bufnr = event.buf }
-              vim.lsp.inlay_hint.enable(not enabled, { bufnr = event.buf })
-            end, '[T]oggle inlay [H]ints')
+          map('n', 'K', vim.lsp.buf.hover)
+          map('n', 'gd', vim.lsp.buf.definition)
+          map('n', 'gD', vim.lsp.buf.declaration)
+          map('n', 'gs', vim.lsp.buf.signature_help)
+          map('n', 'gl', vim.diagnostic.open_float)
+
+          if client:supports_method 'textDocument/documentHighlight' then
+            local highlight_augroup = vim.api.nvim_create_augroup('my.lsp.highlight', { clear = false })
+            vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+              buffer = buf,
+              group = highlight_augroup,
+              callback = vim.lsp.buf.document_highlight,
+            })
+            vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
+              buffer = buf,
+              group = highlight_augroup,
+              callback = vim.lsp.buf.clear_references,
+            })
           end
         end,
       })

@@ -1,47 +1,28 @@
 return {
   'saghen/blink.cmp',
-  event = 'VimEnter',
   version = '1.*',
   dependencies = {
     'L3MON4D3/LuaSnip',
     'folke/lazydev.nvim',
   },
+
+  ---@module 'blink.cmp'
+  ---@type blink.cmp.Config
   opts = {
-    keymap = {
-      preset = 'default',
-    },
-    appearance = {
-      use_nvim_cmp_as_default = false,
-      nerd_font_variant = 'mono',
-    },
     completion = {
-      menu = { auto_show = true },
-      documentation = { auto_show = false, auto_show_delay_ms = 500 },
-      ghost_text = {
-        enabled = false,
-        show_with_menu = false,
-      },
-      accept = {
-        auto_brackets = {
-          enabled = true,
-        },
-      },
+      list = { selection = { auto_insert = false } },
+      documentation = { window = { border = 'rounded' } },
     },
-    cmdline = {
-      enabled = true,
-      keymap = { preset = 'cmdline' },
-      completion = {
-        menu = { auto_show = true },
-      },
-    },
+    signature = { enabled = true },
     sources = {
-      default = { 'lsp', 'path', 'snippets', 'lazydev' },
+      per_filetype = {
+        lua = { inherit_defaults = true, 'lazydev' },
+      },
       providers = {
+        snippets = { opts = { use_label_description = true } },
         lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
       },
     },
     snippets = { preset = 'luasnip' },
-    fuzzy = { implementation = 'lua' },
-    signature = { enabled = true },
   },
 }
