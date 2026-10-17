@@ -27,7 +27,7 @@ return {
       vim.keymap.set('n', '<leader>so', builtin.oldfiles, { desc = 'Telescope oldfiles' })
       vim.keymap.set('n', '<leader>sq', builtin.quickfix, { desc = 'Telescope quickfix ' })
       vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = 'Telescope help tags' })
-      vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = 'Telescope buffers' })
+      vim.keymap.set('n', '<leader>sb', builtin.buffers, { desc = 'Telescope buffers' })
       vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = 'Telescope diagnostics' })
       vim.keymap.set('n', '<leader>sg', function()
         builtin.grep_string { search = vim.fn.input 'Grep > ' }
@@ -37,6 +37,7 @@ return {
       vim.keymap.set('n', '<leader>sn', function()
         builtin.find_files { cwd = vim.fn.stdpath 'config' }
       end, { desc = 'Telescope Neovim files' })
+      vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = 'Telescope resume' })
     end,
   },
 }

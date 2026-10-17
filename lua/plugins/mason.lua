@@ -13,6 +13,7 @@ return {
         'prettier',
         'prettierd',
         'stylua',
+        'clang-format',
       },
     },
   },

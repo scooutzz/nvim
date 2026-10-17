@@ -46,6 +46,9 @@ vim.o.splitbelow = true
 -- filename characters
 vim.opt.isfname:append '@-@'
 
+-- dw/diw/ciw works on full-word
+vim.opt.iskeyword:append '-'
+
 -- search and substitution
 vim.o.ignorecase = true
 vim.o.smartcase = true

@@ -20,4 +20,18 @@ vim.keymap.set('n', '=ap', "ma=ap'a")
 
 vim.keymap.set('x', '<leader>p', [["_dP"]])
 vim.keymap.set({ 'n', 'v' }, '<leader>d', '"_d')
+
 vim.keymap.set('n', '<leader>x', '<cmd>!chmod +x %<CR>', { desc = 'Set file execution permission', silent = true })
+
+vim.keymap.set('n', '<leader>m', '<cmd>Man<CR>', { desc = 'Open Man Page', silent = true })
+
+-- Quickfix list stuff
+vim.keymap.set('n', '<leader>cl', ':cclose<CR>', { silent = true })
+vim.keymap.set('n', '<leader>co', ':copen<CR>', { silent = true })
+vim.keymap.set('n', '<leader>cn', ':cnext<CR>zz')
+vim.keymap.set('n', '<leader>cp', ':cprev<CR>zz')
+
+-- Soure file
+vim.keymap.set('n', '<leader><leader>', function()
+  vim.cmd 'so'
+end, { desc = 'Source file' })
