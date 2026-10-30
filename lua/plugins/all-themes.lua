@@ -8,13 +8,7 @@ end
 -- installed allows the new theme to be applied without restarting Neovim.
 return {
   { 'ribru17/bamboo.nvim', lazy = true, priority = 1000 },
-  {
-    'bjarneo/aether.nvim',
-    branch = 'v3',
-    name = 'aether',
-    lazy = true,
-    priority = 1000,
-  },
+  { 'bjarneo/aether.nvim', branch = 'v3', name = 'aether', lazy = true, priority = 1000 },
   { 'bjarneo/ethereal.nvim', lazy = true, priority = 1000 },
   { 'bjarneo/hackerman.nvim', lazy = true, priority = 1000 },
   { 'bjarneo/vantablack.nvim', lazy = true, priority = 1000 },
@@ -25,7 +19,7 @@ return {
   { 'ellisonleao/gruvbox.nvim', lazy = true, priority = 1000 },
   { 'rebelot/kanagawa.nvim', lazy = true, priority = 1000 },
   { 'tahayvr/matteblack.nvim', lazy = true, priority = 1000 },
-  { 'gthelding/monokai-pro.nvim', lazy = true, priority = 1000 },
+  { 'loctvl842/monokai-pro.nvim', lazy = true, priority = 1000 },
   { 'EdenEast/nightfox.nvim', lazy = true, priority = 1000 },
   { 'rose-pine/neovim', name = 'rose-pine', lazy = true, priority = 1000 },
   { 'ficcdaf/ashen.nvim', lazy = true, priority = 1000 },
