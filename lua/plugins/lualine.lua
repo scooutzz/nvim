@@ -10,7 +10,7 @@ return {
         component_separators = '',
       },
       sections = {
-        lualine_a = { 'mode' },
+        lualine_a = { { 'mode', color = { gui = 'bold' } } },
         lualine_b = { 'branch', 'diff', 'diagnostics' },
         lualine_c = { { 'filename', path = 1 } },
         lualine_x = { 'fileformat' },
